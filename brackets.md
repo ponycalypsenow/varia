@@ -1,4 +1,4 @@
-instalacja brackets.io
-======================
+brackets.io
+===========
 
-zassać i zainstalować z: http://download.brackets.io/
+http://download.brackets.io/
