@@ -8,3 +8,4 @@ daily reading list:
 + http://dailyjs.com/
 + http://webplatformdaily.org/
 + http://blog.cwa.me.uk/
++ http://jasonhaley.com
