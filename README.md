@@ -10,3 +10,4 @@ daily reading list:
 + http://blog.cwa.me.uk/
 + http://jasonhaley.com
 + http://regulargeek.com/
++ http://www.infoq.com/
