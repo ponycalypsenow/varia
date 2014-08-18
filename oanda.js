@@ -23,45 +23,34 @@ function Promise(){
 	return self;
 }
 
-Promise.all = function(promises){
-	// TODO
-};
-
 function oandaRequest(method, path, params, callback){
+  function makeQuery(){    
+    return Object.keys(params).reduce(function(prev, key, keyi){
+      return prev + (keyi == 0? "" : "&") + key + "=" + params[key];
+    }, "");
+  }
+
 	function makePath(){
-		var ret = path;
-		if(method == "GET"){
-			ret = params.reduce(function(prev, x, xi){
-				return prev + (xi == 0? "?" : "&") + (x == "accountId"? "accountId=" + ACCOUNT_ID : x);
-			}, ret);
-		}
-		
-		ret = ret.replace(":account_id", ACCOUNT_ID).replace(":trade_id", params["trade_id"]);
-		return ret;
+    var ret = path;
+		if(method == "GET" && Object.keys(params).length > 0) ret = ret + "?" + makeQuery();
+		return ret.replace(":account_id", ACCOUNT_ID).replace(":trade_id", params["trade_id"]);
 	}
 	
-	function makePostData(){
-		var ret = "";
-		if(method == "POST"){
-			for(var key in params){
-				ret = ret + (ret.length == 0? "" : "&") + key + "=" + params[key];
-			}
-			
-			options.headers["Content-Type"] = "application/x-www-form-urlencoded";
-			options.headers["Content-Length"] = ret.length;
-		}
-		
-		return ret;
-	}
-	
+	var post_data = makeQuery();
 	var options = {
 		host: DOMAIN,
 		path: makePath(),
 		method: method,
-		headers: {"Authorization" : "Bearer " + ACCESS_TOKEN},
+		headers: method != "POST"? {
+      "Authorization" : "Bearer " + ACCESS_TOKEN
+    } : {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Length": post_data.length,
+      "Authorization": "Bearer " + ACCESS_TOKEN
+		}
 	};
 	
-	var post_data = makePostData();
+	console.log(options);
 	var ret = new Promise();
 	var request = https.request(options, function(response){
 		var data = "";
@@ -69,8 +58,11 @@ function oandaRequest(method, path, params, callback){
 			data = data + chunk.toString();
 		});
 		response.on("end", function(chunk){
-			if(response.statusCode != 200) console.log("HTTP - " + response.statusCode);
-			console.log(data);
+			if(response.statusCode != 200){
+        console.log(response.statusCode);
+        console.log(data);
+      }
+      
 			ret.resolve(JSON.parse(data));
 		});
 	});
@@ -81,7 +73,9 @@ function oandaRequest(method, path, params, callback){
 }
 
 function getInstruments(){
-	return oandaRequest("GET", "/v1/instruments", ["accountId"]);
+	return oandaRequest("GET", "/v1/instruments", {
+    accountId: ":account_id"
+  });
 }
 
 function getPrices(instruments){
@@ -89,13 +83,13 @@ function getPrices(instruments){
 		return x.instrument;
 	});
 	
-	function makeParams(){
+	function getInstruments(){
 		return instruments.reduce(function(prev, x, xi){
 			return prev + (xi > 0? "%2C" : "") + x;
-		}, "instruments=");
+		}, "");
 	}
 	
-	return oandaRequest("GET", "/v1/prices", [makeParams()]);
+	return oandaRequest("GET", "/v1/prices", { "instruments": getInstruments() });
 }
 
 function makeOrder(instrument, units, side, type){
@@ -108,7 +102,7 @@ function makeOrder(instrument, units, side, type){
 }
 
 function getOpenTrades(){
-	return oandaRequest("GET", "/v1/accounts/:account_id/trades", []);
+	return oandaRequest("GET", "/v1/accounts/:account_id/trades", {});
 }
 
 function closeTrade(trade_id){
