@@ -74,8 +74,8 @@ function oandaRequest(method, path, params, callback){
 
 function getInstruments(){
 	return oandaRequest("GET", "/v1/instruments", {
-    accountId: ":account_id"
-  });
+		accountId: ":account_id"
+	});
 }
 
 function getPrices(instruments){
