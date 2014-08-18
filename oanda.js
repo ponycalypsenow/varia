@@ -24,14 +24,14 @@ function Promise(){
 }
 
 function oandaRequest(method, path, params, callback){
-  function makeQuery(){    
-    return Object.keys(params).reduce(function(prev, key, keyi){
-      return prev + (keyi == 0? "" : "&") + key + "=" + params[key];
-    }, "");
-  }
+	function makeQuery(){    
+		return Object.keys(params).reduce(function(prev, key, keyi){
+			return prev + (keyi == 0? "" : "&") + key + "=" + params[key];
+		}, "");
+	}
 
 	function makePath(){
-    var ret = path;
+		var ret = path;
 		if(method == "GET" && Object.keys(params).length > 0) ret = ret + "?" + makeQuery();
 		return ret.replace(":account_id", ACCOUNT_ID).replace(":trade_id", params["trade_id"]);
 	}
@@ -42,11 +42,11 @@ function oandaRequest(method, path, params, callback){
 		path: makePath(),
 		method: method,
 		headers: method != "POST"? {
-      "Authorization" : "Bearer " + ACCESS_TOKEN
-    } : {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Content-Length": post_data.length,
-      "Authorization": "Bearer " + ACCESS_TOKEN
+			"Authorization" : "Bearer " + ACCESS_TOKEN
+		} : {
+			"Content-Type": "application/x-www-form-urlencoded",
+			"Content-Length": post_data.length,
+			"Authorization": "Bearer " + ACCESS_TOKEN
 		}
 	};
 	
@@ -59,9 +59,9 @@ function oandaRequest(method, path, params, callback){
 		});
 		response.on("end", function(chunk){
 			if(response.statusCode != 200){
-        console.log(response.statusCode);
-        console.log(data);
-      }
+				console.log(response.statusCode);
+				console.log(data);
+			}
       
 			ret.resolve(JSON.parse(data));
 		});
