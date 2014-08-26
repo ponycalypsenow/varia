@@ -8,6 +8,10 @@ function reduceWeighted(data, reducer, forgettingCurve){
 	}, 0)/total_w;
 }
 
+function range(n){
+	return Array.apply(null, { length: n }).map(function(x, xi){ return xi; });
+}
+
 function constFC(){
 	return 1.0;
 }
@@ -31,7 +35,7 @@ function median(data, forgettingCurve){
 	}, 0)/2.0;
 	var i = 0;
 	while(halftotal_w > 0) halftotal_w -= data[i++][1];
-	return data[i - 1][0];
+	return (data.length%2)? data[i - 1][0] : (data[i - 1][0] + data[i][0])/2.0;
 }
 
 function autoCorrelation(data, lag, forgettingCurve){
@@ -41,7 +45,7 @@ function autoCorrelation(data, lag, forgettingCurve){
 		return prev + w*Math.pow(x - mu, 2.0);
 	}, forgettingCurve);
 	return reduceWeighted(data, function(prev, x, xi, w){
-	if(xi + lag >= data.length) return prev;
+		if(xi + lag >= data.length) return prev;
 		return prev + w*(x - mu)*(data[xi + lag] - mu);
 	}, forgettingCurve)/total;
 }
@@ -60,4 +64,26 @@ function skewness(data, forgettingCurve){
 	return 3.0*(mu - m)/sd;
 }
 
+function rescaledRange(data, n){
+	var rs = 0;
+	for(var i = 0; i < data.length - n; i++){
+		var x = data.slice(i, i + n);
+		var m = mean(x);
+		var y = x.map(function(x){ return x - m; });
+		var z = y.map(function(x, xi){
+			return y.slice(0, xi + 1).reduce(function(prev, x){ return prev + x; }, 0);
+		});
+		var r = Math.max.apply(null, z) - Math.min.apply(null, z);
+		var s = Math.sqrt(mean(y.map(function(y){ return y*y; })));
+		rs += r/s;
+	}
+	
+	return rs/(data.length - n);
+}
+
+function hurstFactor(data){
+	var logmax = Math.floor(Math.log(data.length)/Math.LN2);
+	var rs = range(logmax - 1).map(function(i){ return Math.pow(2, i + 2); }).map(function(n){ return rescaledRange(data, n); });
+	return rs;
+}
 
