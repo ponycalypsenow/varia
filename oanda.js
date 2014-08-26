@@ -23,7 +23,7 @@ function Promise(){
 	return self;
 }
 
-function oandaRequest(method, path, params, callback){
+function oandaRequest(method, path, params){
 	function makeQuery(){    
 		return Object.keys(params).reduce(function(prev, key, keyi){
 			return prev + (keyi == 0? "" : "&") + key + "=" + params[key];
@@ -50,7 +50,6 @@ function oandaRequest(method, path, params, callback){
 		}
 	};
 	
-	console.log(options);
 	var ret = new Promise();
 	var request = https.request(options, function(response){
 		var data = "";
@@ -75,6 +74,14 @@ function oandaRequest(method, path, params, callback){
 function getInstruments(){
 	return oandaRequest("GET", "/v1/instruments", {
 		accountId: ":account_id"
+	});
+}
+
+function getInstrumentHistory(instrument, granularity, count){
+	return oandaRequest("GET", "/v1/candles", {
+		instrument: instrument,
+		granularity: granularity,
+		count: count
 	});
 }
 
