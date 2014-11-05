@@ -1,0 +1,49 @@
+var http = require("http"),
+	url = require("url"),
+	path = require("path"),
+	fs = require("fs"),
+	port = parseInt(process.argv[2] || 3000);
+
+http.createServer(function(req, res){
+	var uri = url.parse(req.url).pathname;
+	var filename = path.join(process.cwd(), uri);
+	var contentTypesByExtension = {
+		".html": "text/html",
+		".css":  "text/css",
+		".js":   "text/javascript"
+	};
+  
+	var writeRes = function(code, head, body, binary){
+		res.writeHead(code, head);
+		res.write(body, binary || "utf8");
+		res.end();
+	};
+	
+	var writeText = function(code, body){
+		writeRes(code, {"Content-Type": "text/plain"}, body);
+	}
+	
+	var writeJSON = function(body){
+		writeRes(200, {"Content-Type": "application/json"}, JSON.stringify(body));
+	}
+
+	fs.exists(filename, function(exists){
+		if(!exists){
+			writeText(404, "404 Not Found\n");
+			return;
+		}
+
+		if(fs.statSync(filename).isDirectory()) filename += "/index.html";
+		fs.readFile(filename, "binary", function(err, file){
+			if(err){        
+				writeText(500, err + "\n");
+				return;
+			}
+
+			var headers = {};
+			var contentType = contentTypesByExtension[path.extname(filename)];
+			if(contentType) headers["Content-Type"] = contentType;
+			writeRes(200, headers, file, "binary");
+		});
+	});
+}).listen(port);
