@@ -29,10 +29,24 @@ var Poly = function(init){
 	};
 };
 
-Poly.ident = function(i, a){
+Poly.ident = function(n, a){
 	var ret = [];
-	ret[i] = a || 1;
+	ret[n] = a || 1;
 	return Poly(ret);
+};
+
+Poly.permuts = function(n, a){
+	var a = a || [0, 1, 1, 2, 3, 5, 8, 13];
+	var n = n || a.length;
+	var permuts = function(s){
+		if(s.length == a.length - n + 1) return s;
+		return s.reduce(function(prev, a, i){
+			var rest = s.slice(0, i).concat(s.slice(i + 1));
+			return prev.concat(permuts(rest).map(function(x){ return [a].concat(x); }));
+		}, []);
+	};
+	
+	return permuts(a);
 };
 
 Poly.zip = function(l, r){
@@ -73,5 +87,3 @@ Poly.div = function(l, r){
 	ret.error = r;
 	return ret;
 };
-
-Poly([1, 2]).integral().report();
