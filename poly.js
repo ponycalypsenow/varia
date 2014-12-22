@@ -1,5 +1,31 @@
-var Poly = function(init){
-	var a = init || [];
+var fs = require("fs");
+
+var Frame = function(data, names){	
+	if(!names){
+		names = data[0];
+		data = data.slice(1);
+	}
+	
+	var columns = {};
+	names.forEach(function(name, i){
+		columns[name] = isNaN(data[0][i])?
+      data.map(function(x){ return x[i]; }) :
+      Poly(data.map(function(x){ return parseFloat(x[i]); }));
+	});
+	
+	columns.names = names;
+	return columns;
+};
+
+Frame.fromCsv = function(name){
+	return Frame(fs.readFileSync(name).toString().
+		split("\n").
+		filter(function(x){ return x.length > 0; }).
+		map(function(x){ return x.split(","); }));
+};
+
+var Poly = function(data){
+	var a = data || [];
 	while(a[a.length - 1] == 0) a.pop();
 	a = a.map(function(x){ return x || 0; });
 	return{
@@ -36,7 +62,7 @@ Poly.ident = function(n, a){
 };
 
 Poly.permuts = function(n, a){
-	var a = a || [0, 1, 1, 2, 3, 5, 8, 13];
+	var a = a || [0, 1, 1, 2, 3, 5, 8, 13, 0, -1, -1, -2, -3, -5, -8, -13];
 	var n = n || a.length;
 	var permuts = function(s){
 		if(s.length == a.length - n + 1) return s;
@@ -46,12 +72,11 @@ Poly.permuts = function(n, a){
 		}, []);
 	};
 	
-	return permuts(a);
+	return permuts(a).map(function(x){ return Poly(x); });
 };
 
 Poly.zip = function(l, r){
-	l = l instanceof Array? Poly(l) : l;
-	r = r instanceof Array? Poly(r) : r;
+	l = l instanceof Array? Poly(l) : l, r = r instanceof Array? Poly(r) : r;
 	var ret = [], n = Math.max(l.deg(), r.deg());
 	for(var i = 0; i <= n; i++) ret[i] = [l.a[i] || 0, r.a[i] || 0];
 	ret.l = l, ret.r = r;
