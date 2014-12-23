@@ -1,7 +1,4 @@
-varia
-=====
-
-daily reading list:
+readings:
 
 + http://highscalability.com/
 + http://www.echojs.com/
