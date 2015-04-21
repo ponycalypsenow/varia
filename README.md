@@ -8,3 +8,5 @@ readings:
 + http://regulargeek.com/
 + http://www.infoq.com/
 + http://developer.yahoo.com/blogs/ydn
++ http://www.datatau.com/
++ http://webplatformdaily.org/
