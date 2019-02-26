@@ -21,10 +21,10 @@ def index():
                 keywords = keywords.attrs.get('content', '') or keywords.attrs.get('Content', '') or []
                 keywords = [k.strip() for k in keywords.split(',')]
                 keywords = [k for k in keywords if len(k) > 0]            
-                bodyText = r.html.find('body', first=True).text
             if keywords is None or len(keywords) == 0:
                 errors.append('Brak słów kluczowych na stronie ({0})'.format(url))
             else:
+                bodyText = r.html.find('body', first=True).text
                 for keyword in keywords:
                     results[keyword] = len(re.findall(r'\b{0}\b'.format(keyword), bodyText, re.IGNORECASE))
         except Exception as e:
