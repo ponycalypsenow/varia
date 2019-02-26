@@ -9,12 +9,13 @@ def index():
     errors = []
     results = {}
     if request.method == 'POST':
-        url = request.form['url']
+        url = ''
+        bodyText = ''
         try:
-            session = HTMLSession()
+            url = request.form['url']
             if not url.startswith('http'):
                 url = 'http://{0}'.format(url)
-            r = session.get(url)
+            r = HTMLSession().get(url)
             keywords = r.html.find('meta[name=Keywords]', first=True) or r.html.find('meta[name=keywords]', first=True)
             if keywords is not None:
                 keywords = keywords.attrs.get('content', '') or keywords.attrs.get('Content', '') or []
