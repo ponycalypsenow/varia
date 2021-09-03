@@ -9,3 +9,11 @@ readings:
 + http://developer.yahoo.com/blogs/ydn
 + http://www.datatau.com/
 + http://webplatformdaily.org/
+
+puyo puyo:
+
++ https://puyo-euphonic.com/
++ https://puyo-camp.jp/
++ https://jiyu-cho.com/
++ http://alg-d.com/
++ https://w.atwiki.jp/puyowords/
