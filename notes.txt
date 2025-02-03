@@ -1,0 +1,50 @@
+A. relax
+B. bring concept into awareness, observe gently
+C. shift to another concept, shift to relation
+D. merge the concepts, reflect
+E. sit with the synergy but still
+
+1. definition, what does point to, what's the most esential quality
+2. bounduary, where does it begin, where does it overlap or differ from the rest
+3. conditions and context, under what conditions it changes, how it changes in different context
+4. relationships and interactions, how does it interact, what emerges from relations
+5. contradictions, what are those with the rest
+6. assumptions, what are they, how do they make me interpret it
+7. emotional response, how my body responds
+8. meaning and purpose, what are those for me
+9. transcending synthesis, is there a higher-level view where it all fits better, what changes in the broader context
+10. reflection/insight, how it shapes my future thinking or actions
+
+sequence - selection - loop
+syngergy + temporary items
+react don't act, structure the problem so the solution surfaces itself, medium aligned with the problem
+
+A. additive (extension) vs multiplicative (modification) changes
+B. most generic data (easy to add functions, continous), most concrete functions (easy to add data, instant)
+C. inflexible - general, flexible - specific (handling of edge cases)
+D. depth - how much context it needs (data, operations intervined) 
+E. precise semantic level, bring complexity forward
+F. meaning of data - how it can be transformed, coupling - understanding and modification
+G. look for contaradictions, ambigouties - abstract them out, determine attributes first - abstract out structures
+
+decide on the long term goal early on, don't get stuck on expensive goals too early - little experience time
+most direct path (cost, time, risk), no inefficiency -> alternative ways or goals, playing into strenghts -> ambitous goal
+
+1. dyspraxia (+ need of momentum), protective shell, memory hooks, warm up routines, overstimulation, discrimination
+2. being able to feel when you're about to make an error
+3. alignment with my goals, what i want from that
+
+(1) equal scope, (2) independent, (3) small in scope and hence as specific and detailed and numerous as possible
+specific enough it has all the physical characteristics for requirements, general it has no arbitrary characteristics; summarizes/abstracts every correct form
+non-verbal point of entry into the problem, most likely for comprehension, opening/suggesting physical possibilities
+
+a requirement diagram (functional consequences are foreseeable) and a form diagram (contains physical implications) at the same time
+
+clusters of variables that are as connected, internally belonging together, as possible (dealing with same particular conflict or for concurrence)
+solution and context (demands on the solution, diagram of forces) are complementary, and the fitness between them is determined by handling of misfits (negative requirements)
+self-organizing produces the well fitting forms, subsystem by subsystem, independently, quickly, preceeding the drift, with no way for disturbances to spread
+tradition holds the rest of variables steady
+the name of a class (all the elements it refers to) of objects or what it means (in terms of other concepts at the same level)
+variables interact if and only if the designer can find some conceptual model which makes sense to him and tells him why
+which kinds of extraneous circumstances are likely to upset the regularity and which are not
+we must construct it, put it in contact with the context, and probe for misfits 
